@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+option go_package = "pkg/proto/v1/urls";
+
+package urls.v1;
+
+service URLsShortener {
+  // Shorts the URL.
+  //
+  // The saved value of the shortened URL will be returned if a raw value is found.
+  // Error is returned if URL is invalid.
+  rpc ShortURL(ShortURLRequest) returns (ShortURLResponse);
+
+  // Saves a batch of URLs.
+  rpc BatchURLs(BatchURLsRequest) returns (BatchURLsResponse);
+}
+
+message ShortURLRequest {
+  string raw = 1;
+}
+
+message ShortURLResponse {
+    string short_url = 1;
+}
+
+message BatchURLsRequest {
+  message URL {
+    string raw = 1;
+    string corr_id = 2;
+  }
+  repeated URL url = 1;
+}
+
+message BatchURLsResponse {
+  message URL {
+    string short_url = 1;
+    string corr_id = 2;
+  }
+  repeated URL batched_urls = 1;
+}
+
+service URLsProvider {
+    // Get the shortened URL.
+    rpc GetShortenedURL(GetShortenedURLRequest) returns (GetShortenedURLResponse);
+
+    // Collects shortened URLs.
+    rpc ListURLs(ListURLsRequest) returns (ListURLsResponse);
+}
+
+message GetShortenedURLRequest {
+  string slug = 1;
+}
+
+message GetShortenedURLResponse {
+    message ShortenedURL {
+        string user_id = 1;
+        string corr_id = 2;
+        string raw = 3;
+        string slug = 4;
+        string value = 5;
+        bool is_deleted = 6;
+    }
+    ShortenedURL short_url = 1;
+}
+
+message ListURLsRequest {}
+
+message ListURLsResponse {
+  message URL {
+    string raw = 1;
+    string short_url = 2;
+  }
+  repeated URL collected_urls = 1;
+}
+
+service URLsDeleter {
+    // Deletes shortened URLs.
+    rpc DelURLs(DelURLsRequest) returns (DelURLsResponse);
+}
+
+message DelURLsRequest {
+  repeated string slugs = 1;
+}
+
+message DelURLsResponse {}

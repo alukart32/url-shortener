@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "pkg/proto/v1/stat";
+
+package stat.v1;
+
+service Statistics {
+  // Collects shortened URLs statistics.
+  rpc Stat(StatRequest) returns (StatResponse);
+}
+
+message StatRequest {}
+
+message StatResponse {
+  int32 urls_count = 1;
+  int32 users_count = 2;
+}

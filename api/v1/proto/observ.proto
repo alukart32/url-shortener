@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "pkg/proto/v1/observ";
+
+package observ.v1;
+
+service Observability {
+  // Postgres health ping.
+  rpc PingPostgres(PingPostgresRequest) returns (PingPostgresResponse);
+}
+
+message PingPostgresRequest {}
+message PingPostgresResponse {}

@@ -1,0 +1,11 @@
+{
+    "server_address": "localhost:8080",
+    "grpc_server_address": "localhost:50052",
+    "base_url": "http://localhost:8080",
+    "file_storage_path": "file.db",
+    "database_dsn": "",
+    "enable_https": false,
+    "trusted_subnet": "192.168.1.0/24",
+    "jwt_sign_key": "top_secret",
+    "jwt_token_expr": "1h"
+}
